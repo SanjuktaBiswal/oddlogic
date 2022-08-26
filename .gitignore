@@ -1,4 +1,4 @@
-*.py
+
 *.ipynb
 # Ignoring directories
 .ipynb_checkpoints/
