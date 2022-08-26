@@ -1,0 +1,6 @@
+*.py
+*.ipynb
+# Ignoring directories
+.ipynb_checkpoints/
+__pycache__/
+saved_models/
