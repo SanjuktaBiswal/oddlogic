@@ -12,12 +12,12 @@ from userValidation import SigninDetails
 import pandas as pd
 import os
 import numpy as np
-Collection_Credentials="Input"
+Collection_Credentials="input"
 oddlogic_Prediction=SigninDetails("mongodb+srv://oddlogic:oddlogic@cluster0.8qa4jjw.mongodb.net/?retryWrites=true&w=majority","oddlogic")
-
+#oddlogic_Prediction=SigninDetails("mongodb://localhost:27017/","oddlogic")
 oddlogic_Prediction.create_Collection(Collection_Credentials) 
 
-tktdata = pd.read_excel(r'Input\hon.xlsx',sheet_name='Sheet1')
+tktdata = pd.read_excel(r'input\hon.xlsx',sheet_name='Sheet1')
 tktdata=tktdata.head(1000)
 
 

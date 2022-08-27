@@ -58,6 +58,7 @@ def app():
         if st.button("Signup"):
             Collection_Credentials="Credentials"
             oddlogic_Prediction=SigninDetails("mongodb+srv://oddlogic:oddlogic@cluster0.8qa4jjw.mongodb.net/?retryWrites=true&w=majority","oddlogic")
+            #oddlogic_Prediction=SigninDetails("mongodb://localhost:27017/","Model")
             
             oddlogic_Prediction.create_Collection(Collection_Credentials)            
                

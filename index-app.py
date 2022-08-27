@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
 import plotly.graph_objects as go
 from  multipage import MultiPage
-import login,signup,settings,prediction,transfer_learning,training
+import login,signup,settings,prediction,training,transfer
 from PIL import  Image
 
 try:
@@ -66,7 +66,7 @@ st.session_state['app'] = MultiPage()
 st.session_state['app'].add_page("Login", login.app)
 st.session_state['app'].add_page("Signup", signup.app)
 st.session_state['app'].add_page("Training", training.app)
-st.session_state['app'].add_page("Transfer Learning",transfer_learning.app)
+st.session_state['app'].add_page("Transfer Learning",transfer.app)
 st.session_state['app'].add_page("Prediction",prediction.app)
 st.session_state['app'].add_page("Settings", settings.app)
 st.session_state['app'].run()
