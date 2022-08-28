@@ -16,5 +16,6 @@ bs4
 nltk
 matplotlib
 xlrd
+openpyxl
 
 
