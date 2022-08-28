@@ -56,7 +56,7 @@ def app():
         # Emperical Findings
         """)
         st.markdown("""---""")
-       # os.chdir(r"C:\Users\10689029\OneDrive - LTI\Documents\AI\ML\hackathon\onpremise_git")
+        # os.chdir("C:/Users/10689029/OneDrive - LTI/Documents/AI/ML/hackathon/onpremise_git")
         df = pd.read_excel(io="report/Analysis_accuracy.xlsx")
         df['Train Accuracy ( % )'] = df['Train Accuracy ( % )'].astype("string")
         df['Test Accuracy ( % )'] = df['Test Accuracy ( % )'].astype("string")
