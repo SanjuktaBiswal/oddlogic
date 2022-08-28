@@ -89,7 +89,7 @@ def app():
     if st.session_state['customer'] =="Customer 1":
         url="http://localhost:8601/v1/models/oddlogic/labels/cust1:predict"
         
-        labels_index = load_obj(r'files_prediction\base_V11_labels_dict.pickle')
+        labels_index = load_obj('files_prediction/base_V11_labels_dict.pickle')
         
         if st.session_state['chkbox_csv_file']:
             df=st.session_state['user_data']
