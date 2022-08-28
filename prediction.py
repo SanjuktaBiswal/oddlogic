@@ -36,7 +36,7 @@ def app():
         
         model_names =[];
         
-        temp=r'config\customers.txt'
+        temp='config/customers.txt'
         with open(temp) as f:
             contents = f.readlines()
             
