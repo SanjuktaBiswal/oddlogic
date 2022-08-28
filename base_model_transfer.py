@@ -35,29 +35,16 @@ drive.mount('/content/drive')
 # Load required libraries
 import numpy as np # For mathematical calculations
 import pandas as pd # For Dtaa frames
-import tensorflow as tf
-from tensorflow.keras.preprocessing.text import Tokenizer # For text tokenization
-from tensorflow.keras.preprocessing.sequence import pad_sequences # For padding the text sequences
-from tensorflow.keras.utils import to_categorical # To do one hot encoding of the numeric lable indexes
-from tensorflow.keras.layers import Input,Dense,Embedding,LSTM # NN Layers
-from tensorflow.keras.models import Model,load_model # 
-from tensorflow.keras.initializers import Constant
-from tensorflow.keras.callbacks import Callback,ModelCheckpoint,EarlyStopping
-#from tensorflow.metrics import f1_score,recall_score,precision_score
-from tensorflow.keras.metrics import Recall,Precision
-from tensorflow.keras.layers import BatchNormalization
+
 from PIL import Image
 from datetime import datetime
-import tensorflow_addons as tfa
+
 import pickle
 import re,os
-from tensorflow.keras import optimizers
+
 import matplotlib.pyplot as plt
 import warnings
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-nltk.download('stopwords')
+
 import pickle
 import streamlit as st
 # Define preprocessing functions
@@ -111,24 +98,7 @@ def get_summary(x):
     return ''.join(text_words)
 
 
-class Metrics(Callback):
-    def __init__(self, monitor='val_acc', value=91, verbose=0):
-        super(Callback, self).__init__()
-        self.monitor = monitor
-        self.value = value
-        self.verbose = verbose
-        self.val_f1s = []
-        self.val_recalls = []
-        self.val_precisions = []
-        '''
-   def on_train_begin(self, logs={}):
-        self.val_f1s = []
-        self.val_recalls = []
-        self.val_precisions = []
-        self.monitor = monitor
-        self.value = value
-        self.verbose = verbose
-        '''
+
  
 def format_func(value):
     
@@ -136,7 +106,42 @@ def format_func(value):
    
 
 def training_model():
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    nltk.download('stopwords')
+    import tensorflow as tf
+    import tensorflow_addons as tfa
+    from tensorflow.keras.preprocessing.text import Tokenizer # For text tokenization
+    from tensorflow.keras.preprocessing.sequence import pad_sequences # For padding the text sequences
+    from tensorflow.keras.utils import to_categorical # To do one hot encoding of the numeric lable indexes
+    from tensorflow.keras.layers import Input,Dense,Embedding,LSTM # NN Layers
+    from tensorflow.keras.models import Model,load_model # 
+    from tensorflow.keras.initializers import Constant
+    from tensorflow.keras.callbacks import Callback,ModelCheckpoint,EarlyStopping
+    #from tensorflow.metrics import f1_score,recall_score,precision_score
+    from tensorflow.keras.metrics import Recall,Precision
+    from tensorflow.keras.layers import BatchNormalization
+    from tensorflow.keras import optimizers
     global final_stop_words,reversed_dictionary
+    class Metrics(Callback):
+        def __init__(self, monitor='val_acc', value=91, verbose=0):
+            super(Callback, self).__init__()
+            self.monitor = monitor
+            self.value = value
+            self.verbose = verbose
+            self.val_f1s = []
+            self.val_recalls = []
+            self.val_precisions = []
+            '''
+       def on_train_begin(self, logs={}):
+            self.val_f1s = []
+            self.val_recalls = []
+            self.val_precisions = []
+            self.monitor = monitor
+            self.value = value
+            self.verbose = verbose
+            '''
     starttime = datetime.now()
     st.session_state['status_placeholder'].warning("Fetching Data...")
     #print('Starting time:',starttime)

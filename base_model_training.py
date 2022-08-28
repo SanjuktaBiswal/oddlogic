@@ -45,10 +45,7 @@ import re,os
 
 import matplotlib.pyplot as plt
 import warnings
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-nltk.download('stopwords')
+
 import pickle
 import streamlit as st
 # Define preprocessing functions
@@ -123,6 +120,10 @@ def training_model():
     from tensorflow.keras.layers import BatchNormalization
     import tensorflow_addons as tfa
     from tensorflow.keras import optimizers
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    nltk.download('stopwords')
     st.session_state['status_placeholder'].warning("Fetching Data...")
     global final_stop_words,reversed_dictionary
     starttime = datetime.now()
