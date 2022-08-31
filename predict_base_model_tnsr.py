@@ -1,6 +1,5 @@
 
 from io import BytesIO
-import pickle
 import requests
 import numpy as np # For mathematical calculations
 import pandas as pd # For Dtaa frames
@@ -9,13 +8,10 @@ from sklearn.metrics import f1_score,recall_score,precision_score,classification
 import sys
 import re
 from datetime import datetime
-
-
 import requests
 import json
 import os
 import streamlit as st
-
 from PIL import Image
 
 # Parameters
@@ -31,9 +27,9 @@ final_stop_words=None
 labels_index=None
 
 # Load Label_Index
-def load_obj(name):
-    with open(name, 'rb') as f:
-        return pickle.load(f)
+# def load_obj(name):
+#     with open(name, 'rb') as f:
+#         return pickle.load(f)
     
 # Define preprocessing functions
 def replaceNumber(x):
@@ -111,7 +107,7 @@ def app():
         if st.session_state['option'] =="Transfered Model":
             url="http://localhost:8602/v1/models/oddlogic/labels/cust2trnsfer:predict"
             
-            labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
+            #labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
            
             if st.session_state['chkbox_csv_file']:
                 df=st.session_state['user_data']
@@ -125,7 +121,7 @@ def app():
     
         if st.session_state['option'] =="Superimposed Model":
             url="http://localhost:8603/v1/models/oddlogic/labels/cust2si:predict"
-            labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
+            #labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
            
             if st.session_state['chkbox_csv_file']:
                 df=st.session_state['user_data']
@@ -141,7 +137,7 @@ def app():
               
     if st.session_state['customer'] =="Customer 3":
         if st.session_state['option'] =="Transfered Model":
-            labels_index = load_obj('./files_prediction/customer3_transfered_V11_labels_dict.pickle')
+            #labels_index = load_obj('./files_prediction/customer3_transfered_V11_labels_dict.pickle')
            
             if st.session_state['chkbox_csv_file']:
                 df=st.session_state['user_data']
