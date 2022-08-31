@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
 import plotly.graph_objects as go
 from  multipage import MultiPage
-import login,signup,prediction_tnsr,report,prediction,training,transfersettings
+import login,signup,prediction_tnsr,report,prediction,training,transfer,settings
 from PIL import  Image
 
 
