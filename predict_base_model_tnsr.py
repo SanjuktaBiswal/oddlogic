@@ -69,7 +69,7 @@ def get_label(x):
 def app():
     #os.chdir(r"C:\Users\biswa\OneDrive\Documents\Python Tutorial\Streamlite\neurohack")
     url=""
-    from nltk.corpus import stopwords    
+    #from nltk.corpus import stopwords    
     global final_stop_words
     # Model Parameters - Non configurable
     global labels_index
@@ -183,10 +183,10 @@ def app():
     print(str(datetime.now())[:19]+'-> '+'Data file shape after removing any missing summary records:',df.shape)
     
     
-    stopwordlist = stopwords.words('english')
-    stopwordlist.append('would')
-    not_stopwords = {'not','up','down','on','off','above','below','between'}
-    final_stop_words = [word for word in stopwordlist if word not in not_stopwords]
+    # stopwordlist = stopwords.words('english')
+    # stopwordlist.append('would')
+    # not_stopwords = {'not','up','down','on','off','above','below','between'}
+    # final_stop_words = [word for word in stopwordlist if word not in not_stopwords]
     
     
     
