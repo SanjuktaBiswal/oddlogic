@@ -71,6 +71,7 @@ def get_label(x):
 
 
 def app():
+    #os.chdir(r"C:\Users\biswa\OneDrive\Documents\Python Tutorial\Streamlite\neurohack")
     url=""
     from nltk.corpus import stopwords    
     global final_stop_words
@@ -79,18 +80,22 @@ def app():
     
     tokenizer=None
     
-    with open('./files_prediction/base_V11_tokenizer.pickle', 'rb') as handle:
-        tokenizer = pickle.load(handle)
-        
+    # with open('./files_prediction/base_V11_tokenizer.pickle', 'rb') as handle:
+    #     tokenizer = pickle.load(handle)
+    tokenizer = np.load('files_prediction/dataset_conversion.npy',allow_pickle='TRUE').item()   
+    #tokenizer = json.loads(str(tokenizer))
+   
     st.session_state['tnsnr_status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Load Model Components for model '+sl_name)
+    
     
     #-----------------------------------------------------------------------------
     
     if st.session_state['customer'] =="Customer 1":
         url="http://localhost:8601/v1/models/oddlogic/labels/cust1:predict"
         
-        labels_index = load_obj('files_prediction/base_V11_labels_dict.pickle')
-        
+        #labels_index = load_obj(r'files_prediction\base_V11_labels_dict.pickle')
+        labels_index = np.load('files_prediction/base_V11_labels_dict.npy',allow_pickle='TRUE').item()
+        labels_index = json.loads(str(labels_index))
         if st.session_state['chkbox_csv_file']:
             df=st.session_state['user_data']
         else:
@@ -150,7 +155,7 @@ def app():
     #-----------------------------------------------------------------------------
     starttime = datetime.now()
   
-    
+    #df = pd.read_excel(io=inputpath+"/Final_data.xlsx")
     #Load back Tokenizer
     
     #with open('./savedmodels/'+sl_name+'_'+ver+'_tokenizer.pickle', 'rb') as handle:
@@ -207,10 +212,31 @@ def app():
     
     
     #### Predict Target for Unseen Data
-    sample_rec=df[summary_col] 
-    seq = tokenizer.texts_to_sequences(sample_rec)
+    #sample_rec=df[summary_col] 
+    #seq = tokenizer.texts_to_sequences(sample_rec)
     
+    
+    # print(len(seq),df.shape[0])
+    # dict_write={}
+    
+    # for ind,data in enumerate(len(df[summary_col].tolist())):
+    #     dict_write[data]=seq[ind]
+    # print(len(dict_write))
+    # np.save(r"C:\Users\biswa\OneDrive\Documents\Python Tutorial\Streamlite\neurohack\files_prediction\dataset_conversion.npy", dict_write)
+    # 
+   
+    seq=[]
+    for data in df[summary_col].tolist():
+        try:
+            
+            seq.append(tokenizer[data])
+        except Exception as e:
+            
+            pass
+   
     sample_rec_seq=[]
+    
+    
     for data in seq:
      sample_rec_seq.append( np.pad(seq[0],(MAX_SEQUENCE_LENGTH,0),mode='constant', constant_values=0))
     sample_rec_seq=np.array(sample_rec_seq)
