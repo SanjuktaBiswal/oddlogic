@@ -13,7 +13,6 @@ graphviz
 connect
 statsmodels
 bs4
-nltk
 matplotlib
 xlrd
 openpyxl
