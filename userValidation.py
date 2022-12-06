@@ -7,12 +7,12 @@ import bcrypt
 import gridfs
 class SigninDetails():
     def __init__(self,DEFAULT_CONNECTION_URL = "mongodb+srv://oddlogic:oddlogic@cluster0.8qa4jjw.mongodb.net/?retryWrites=true&w=majority",DB_NAME=None):
-        self.DEFAULT_CONNECTION_URL = DEFAULT_CONNECTION_URL
+        self.DEFAULT_CONNECTION_URL = 'mongodb://localhost:27017'#DEFAULT_CONNECTION_URL
         self.DB_NAME = DB_NAME
         self.collection_dict={}
         # Establish a connection with mongoDB
         self.client = pymongo.MongoClient(self.DEFAULT_CONNECTION_URL)
-        # Create a DB
+        # Create a DB  
         dbnames = self.client.list_database_names()
         #if self.DB_NAME not in dbnames:
         self.dataBase = self.client[self.DB_NAME]

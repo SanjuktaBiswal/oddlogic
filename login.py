@@ -179,7 +179,7 @@ def app():
             else:
                 new_user = st.text_input("User Name",value="Oddlogic")
             pw_placeholder=st.empty() 
-            new_password = pw_placeholder.text_input("Password",type='password',value="Oddlogic")
+            new_password = pw_placeholder.text_input("Password",type='password',value="oddlogic")
             
             col1,col2=st.columns([1,1])
             with col1:

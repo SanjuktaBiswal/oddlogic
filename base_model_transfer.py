@@ -54,12 +54,12 @@ import re,os
 from tensorflow.keras import optimizers
 import matplotlib.pyplot as plt
 import warnings
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-nltk.download('stopwords')
+
+
+
 import pickle
 import streamlit as st
+    
 # Define preprocessing functions
 #os.chdir(r'C:\Users\biswa\OneDrive\Documents\Python Tutorial\Streamlite\neurohack')
 from userValidation import SigninDetails
@@ -136,6 +136,9 @@ def format_func(value):
    
 
 def training_model():
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
     global final_stop_words,reversed_dictionary
     starttime = datetime.now()
     st.session_state['status_placeholder'].warning("Fetching Data...")
@@ -569,9 +572,9 @@ def training_model():
     
     
     st.session_state['status_placeholder'].warning("Plotting Is In Progress...")
-    model.save('saved_models/1')
+    model.save('saved_models/2')
     
-    plt.savefig('training_graph.png')
+    plt.savefig('transfer_graph.png')
     
     fig, ax = plt.subplots()
     print("epochs:",epochs,accuracy)
@@ -600,7 +603,7 @@ def training_model():
     ax.set_xlabel("Epoch -------->")
     ax.set_ylabel("Accuracy -------->")
     
-    image = Image.open('training_graph.png')
+    image = Image.open('transfer_graph.png')
     
     new_image = image.resize((900, 400))
     

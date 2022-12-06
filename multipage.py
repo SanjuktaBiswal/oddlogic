@@ -3,7 +3,7 @@
 
 # Import necessary libraries 
 import streamlit as st
-
+from PIL import Image
 # Define the multipage class to manage the multiple apps in our program 
 class MultiPage: 
     """Framework for combining multiple streamlit applications."""
@@ -28,9 +28,32 @@ class MultiPage:
         )
 
     def run(self):
+        page_bg_image="""
+        
+        <style>
+       
+        body
+        {
+            color:#FFFFFF,
+            
+            
+            }
+        
+        </style>
+        """
+        
+        
+        col1,col2,col3=st.sidebar.columns([1,2.5,1])
+        img=Image.open("proscale.png")
+        img = img.resize((120,100),Image.ANTIALIAS)
+        
+        with col2:
+           
+            st.image(img, use_column_width=False)
+        
         # Drodown to select the page to run  
         page = st.sidebar.selectbox(
-            'Select From the Below Dropdown', 
+            '', 
             self.pages, 
             format_func=lambda page: page['title']
         )

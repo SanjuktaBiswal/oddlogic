@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Selenium Tutorial/Auto/.idea/Auto.iml" filepath="$PROJECT_DIR$/../Selenium Tutorial/Auto/.idea/Auto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Odd Logic.iml" filepath="$PROJECT_DIR$/.idea/Odd Logic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../OddLogic/.idea/OddLogic.iml" filepath="$PROJECT_DIR$/../OddLogic/.idea/OddLogic.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/RUTO_7.0.1_0/.idea/RUTO_7.0.1_0.iml" filepath="$USER_HOME$/Desktop/RUTO_7.0.1_0/.idea/RUTO_7.0.1_0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SeleniumWDTutorial/.idea/SeleniumWDTutorial.iml" filepath="$PROJECT_DIR$/../SeleniumWDTutorial/.idea/SeleniumWDTutorial.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/True Path/.idea/True Path.iml" filepath="$USER_HOME$/Desktop/True Path/.idea/True Path.iml" />
+    </modules>
+  </component>
+</project>
