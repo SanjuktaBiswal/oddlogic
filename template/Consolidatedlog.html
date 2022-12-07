@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: table;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.container{
+display:flex;
+border:2px solid white;
+
+flex-direction:column;
+height:100%;
+width:auto;
+
+}
+.fitemup{
+background-color:#0099CC;
+border:2px solid white;
+margin:12px;
+display:flex;
+justify-content:center;
+margin-bottom:2px;
+height:20%;
+}
+.containervertical{
+display:flex;
+border:2px solid white;
+flex-direction:row;
+height:100%;
+}
+
+.topitem{
+align-self:center;
+}
+.fitemside{
+background-color:#EEEEEE;
+border:2px solid white;
+margin:5px 0 0 10px;
+padding:5px;
+margin-bottom:2px;
+width:30%
+}
+form {
+    display: block;
+    margin-top: 0em;
+    margin-block-end: 1em;
+}
+.fitemsection{
+border:2px solid white;
+
+margin:5px 0 0 10px;
+padding:5px;
+margin-bottom:2px;
+width:70%
+}
+
+.table{
+
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    color: #FFFFFF; font-size: 20pt; font-weight: bold
+
+
+}
+select {
+    width: 100%;
+    height:130px;
+    font-size: 8pt;
+}
+
+select:-internal-list-box {
+    appearance: auto;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    white-space: nowrap;
+    border-radius: 2px;
+}
+
+.fitemdown{
+display:flex;
+justify-content:center;
+
+align-items:center;
+border:2px solid grey;
+background-color:white;
+margin:10px;
+padding:10px;
+height:80%;
+}
+
+div.scroll {
+
+
+                background-color: white;
+                width: 100%;
+                height:100%;
+		font-size: 8pt;
+                overflow-x: hidden;
+                overflow-y: auto;
+                text-align:center;
+            }
+</style>
+<title>Log:Script</title>
+</head>
+<body>
+<div class="container">
+<div class="fitemup">
+  <table class="topitem table">
+    <tbody>
+    <tr>
+      <td id="logscript">Log: </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<div class="fitemdown">
+	<div id="status" class="scroll">
+
+	</div>
+
+  </div>
+
+
+</div>
+
+</body>
+</html>
