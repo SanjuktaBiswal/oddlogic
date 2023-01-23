@@ -15,7 +15,11 @@ from bs4 import BeautifulSoup
 from AccessValidation import Access
 import predict_base_model
 import os
+import random
 def app():
+    
+    st.session_state['customer']=None
+    st.session_state['option']=None
     placeholder=st.empty()   
     st.session_state['chkbox_csv_file']=False 
     if True or st.session_state['userid']!="":
@@ -34,8 +38,9 @@ def app():
         temp=r'config\customers.txt'
         with open(temp) as f:
             contents = f.readlines()
+            
             for line in contents:
-                print("--------")
+                
                 if '\n'  in line :
                     model_names.append(line[:line.index("\n")])
                 else:
@@ -52,6 +57,8 @@ def app():
             
             col1,col2,col3,col4=st.columns([1.5,0.2,1.5,0.5])
             with col1:
+                st.session_state['data_external'] = st.text_input('GIT url To download csv File.(Click on View raw and Copy the URL)')
+                st.write("OR")
                 Analyse_CSV = st.empty()
                 csv=Analyse_CSV.checkbox('Use CSV/Excel File For Prediction')
                 uploaded_file = st.file_uploader("Upload your Data File in CSV/XLS/XLSX Format",type=['csv','xlsx','xls'])#type=['png','jpeg']
@@ -67,13 +74,19 @@ def app():
             with col2:
                 pass
             with col3:
-                st.session_state['data_external'] = st.text_input('GIT url To download csv File.(Click on View raw and Copy the URL)')
+                
+                st.session_state['customer'] = st.selectbox(
+                'Select the Customer',
+                     ["Customer 1","Customer 2","Customer 3"])
+                
                 if len(model_names)>0:
-                    option = st.selectbox(
+                    
+                    st.session_state['option'] = st.selectbox(
                    'Select the Desired Model',
                         model_names)
                 else:
                     st.subheader("No Model is Avaliable to Select")
+                        
                 
            
             with col4:
@@ -87,13 +100,13 @@ def app():
             if flag:
                if csv:
                  st.session_state['chkbox_csv_file']=True
-               st.session_state['status_predict_placeholder'].warning("Processing Data")
+                 st.session_state['status_predict_placeholder'].warning("Processing Data")
                    
                predict_base_model.app()
                 
                
                             
-            if 'status_predict_placeholder' not in st.session_state:
+        if 'status_predict_placeholder' not in st.session_state:
                  st.session_state['status_predict_placeholder']=st.empty()                
                             
                            

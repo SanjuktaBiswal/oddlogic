@@ -54,12 +54,12 @@ import re,os
 from tensorflow.keras import optimizers
 import matplotlib.pyplot as plt
 import warnings
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-nltk.download('stopwords')
-import pickle
 import streamlit as st
+
+    
+
+import pickle
+
 # Define preprocessing functions
 #os.chdir(r'C:\Users\biswa\OneDrive\Documents\Python Tutorial\Streamlite\neurohack')
 from userValidation import SigninDetails
@@ -136,6 +136,13 @@ def format_func(value):
    
 
 def training_model():
+       
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    import nltk
+    nltk.download('stopwords')
+    
+    
     global final_stop_words,reversed_dictionary
     starttime = datetime.now()
     st.session_state['status_placeholder'].warning("Fetching Data...")
@@ -186,6 +193,7 @@ def training_model():
     
     
     #Exclude stopwords as per ur need
+    #print(" train st.session_state['stopwordlist:", st.session_state['stopwordlist'])
     stopwordlist = stopwords.words('english')
     stopwordlist.append('would')
     not_stopwords = {'not','up','down','on','off','above','below','between','dear','team','regards'}

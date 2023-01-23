@@ -1,4 +1,7 @@
 import streamlit as st
+
+
+    
 import pandas as pd
 import numpy as np
 import pickle
@@ -8,8 +11,9 @@ from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
 import plotly.graph_objects as go
 from  multipage import MultiPage
-import login,signup,settings,prediction,training,transfer
+import login,signup,settings,prediction,prediction_tnsr#,prediction,training,report,transfer
 from PIL import  Image
+
 
 try:
     st.set_page_config(layout="wide")
@@ -65,9 +69,11 @@ st.session_state['app'] = MultiPage()
 
 st.session_state['app'].add_page("Login", login.app)
 st.session_state['app'].add_page("Signup", signup.app)
-st.session_state['app'].add_page("Training", training.app)
-st.session_state['app'].add_page("Transfer Learning",transfer.app)
+#st.session_state['app'].add_page("Training", training.app)
+#st.session_state['app'].add_page("Transfer Learning",transfer.app)
 st.session_state['app'].add_page("Prediction",prediction.app)
+st.session_state['app'].add_page("Prediction In Cloud",prediction_tnsr.app)
+#st.session_state['app'].add_page("Report",report.app)
 st.session_state['app'].add_page("Settings", settings.app)
 st.session_state['app'].run()
 

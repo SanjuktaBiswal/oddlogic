@@ -1,45 +1,43 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[26]:
-
-
-print('Starting process..\n')
-from io import BytesIO
 import pickle
-import requests
+
+#import tf.keras
+
 import numpy as np # For mathematical calculations
 import pandas as pd # For Dtaa frames
+
 from datetime import datetime
 from sklearn.metrics import f1_score,recall_score,precision_score,classification_report,accuracy_score
 import sys
 import re
 from datetime import datetime
-import nltk
-from nltk.corpus import stopwords
-import requests
-import json
-import os
 import streamlit as st
-from PIL import Image
 
-# Parameters
-filename = "base_V11_Test"
-MAX_SEQUENCE_LENGTH = 40
+    
+
+final_stop_words=None
+import os
+
 # Model Parameters - configurable
-path = './savedmodels'
-inputpath = './input'
+filename = "Final_Prediction"
+path = './input'
 sl_name = 'base' 
 ver = 'V11'
 summary_col = 'Short description'
-final_stop_words=None
 labels_index=None
+
+MAX_SEQUENCE_LENGTH = 40
+
+
+
+
+# In[ ]:
+
 
 # Load Label_Index
 def load_obj(name):
     with open(name, 'rb') as f:
         return pickle.load(f)
-    
 # Define preprocessing functions
 def replaceNumber(x):
     return re.sub('[^<a-zA-Z0-9>][\d]+',' #Nembor#',str(x))
@@ -70,70 +68,102 @@ def replaceothers(x):
 # Function to return Label from the index
 def get_label(x):
     return list(labels_index.keys())[list(labels_index.values()).index(x)]
-
-
-
-
-
 def app():
-    
-    
+    import tensorflow as tf
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.preprocessing.sequence import pad_sequences # For padding the text sequences
+    import nltk
+    from nltk.corpus import stopwords
     global final_stop_words
-    # Model Parameters - Non configurable
-    global labels_index
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Load Model Components for model '+sl_name)
-    
-    starttime = datetime.now()
-    
-    # In[14]:
-    
-    
-    #Load back Tokenizer
-    
-    with open('./savedmodels/'+sl_name+'_'+ver+'_tokenizer.pickle', 'rb') as handle:
+    loaded_model=None
+    df=None
+    global labels_index    
+    tokenizer=None
+    st.session_state['status_predict_placeholder'].warning("Predicting Data...........")
+    with open('./files_prediction/base_V11_tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
+    if st.session_state['customer'] =="Customer 1":
         
-    
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Tokenizer Loaded Successfully.')
-    
-    
-    
-    # In[15]:
-    
-    
-    
+        loaded_model = load_model(r'files_prediction\best_model.hdf5')
         
-    labels_index = load_obj('./savedmodels/'+sl_name+'_'+ver+'_labels_dict.pickle')
-    
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Label_Index Loaded Successfully.\n')
-    
-    if st.session_state['chkbox_csv_file']:
-        df=st.session_state['user_data']
-    else:
+        labels_index = load_obj(r'files_prediction\base_V11_labels_dict.pickle')
         
-        df = pd.read_excel(io=inputpath+"/"+filename+".xlsx") #,sheet_name = 'Inc')
-    if st.session_state['data_external']:
-        try:
-            user_data=pd.read_csv( st.session_state['data_external'])
-        except:
-            df = pd.read_excel(io=inputpath+"/"+filename+".xlsx") #,sheet_name = 'Inc')
-        
+        if st.session_state['chkbox_csv_file']:
+            df=st.session_state['user_data']
+        else:
+            df = pd.read_excel(io=path+"/dataset_base_predict.xlsx")
+        if st.session_state['data_external']:
+            try:
+                df=pd.read_csv( st.session_state['data_external'])
+            except:
+                df = pd.read_excel(io=path+"/dataset_base_predict.xlsx")
     
+    if st.session_state['customer'] =="Customer 2":
+        if st.session_state['option'] =="Transfered Model":
+            loaded_model = load_model('./files_prediction/'+'cust2_transferred_model.hdf5')
+            labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
+           
+            if st.session_state['chkbox_csv_file']:
+                df=st.session_state['user_data']
+            else:
+                df = pd.read_excel(io=path+"/dataset_cust2_predict.xlsx")
+            if st.session_state['data_external']:
+                try:
+                    df=pd.read_csv( st.session_state['data_external'])
+                except:
+                    df = pd.read_excel(io=path+"/dataset_cust2_predict.xlsx")
     
-    # In[17]:
+        if st.session_state['option'] =="Superimposed Model":
+            loaded_model = load_model('./files_prediction/'+'cust2_superimposed_model.hdf5')
+            labels_index = load_obj('./files_prediction/cust2_V11_labels_dict.pickle')
+           
+            if st.session_state['chkbox_csv_file']:
+                df=st.session_state['user_data']
+            else:
+                df = pd.read_excel(io=path+"/dataset_cust2_predict.xlsx")
+            if st.session_state['data_external']:
+                try:
+                    df=pd.read_csv( st.session_state['data_external'])
+                except:
+                    df = pd.read_excel(io=path+"/dataset_cust2_predict.xlsx")
+                    
+                    
+              
+    if st.session_state['customer'] =="Customer 3":
+        if st.session_state['option'] =="Transfered Model":
+            loaded_model = load_model('./files_prediction/'+'customer3_transfered_model.hdf5')
+            labels_index = load_obj('./files_prediction/customer3_transfered_V11_labels_dict.pickle')
+           
+            if st.session_state['chkbox_csv_file']:
+                df=st.session_state['user_data']
+            else:
+                df = pd.read_excel(io=path+"/dataset_cust3_predict.xlsx")
+            if st.session_state['data_external']:
+                try:
+                    df=pd.read_csv( st.session_state['data_external'])
+                except:
+                    df = pd.read_excel(io=path+"/dataset_cust3_predict.xlsx")
     
+        if st.session_state['option'] =="Superimposed Model":
+            loaded_model = load_model('./files_prediction/'+'customer3_superimposed_new_model.hdf5')
+            labels_index = load_obj('./files_prediction/customer3_transfered_V11_labels_dict.pickle')
+           
+            if st.session_state['chkbox_csv_file']:
+                df=st.session_state['user_data']
+            else:
+                df = pd.read_excel(io=path+"/dataset_cust3_predict.xlsx")
+            if st.session_state['data_external']:
+                try:
+                    df=pd.read_csv( st.session_state['data_external'])
+                except:
+                    df = pd.read_excel(io=path+"/dataset_cust3_predict.xlsx")
     
-    # Check for any empty cells
-    #null_columns=df.columns[df.isnull().any()]
-    #print(str(datetime.now())[:19]+'-> '+'Null Columns:',df[null_columns].isnull().sum())
-    
+
+   
     # Drop the rows with empty cells in summary column
     df.dropna(subset=[summary_col], inplace=True)
-    #df.dropna(subset=['SubCategory'], inplace=True)
-    print(str(datetime.now())[:19]+'-> '+'Data file shape after removing any missing summary records:',df.shape)
     
-    
-    # In[22]:
+    # In[ ]:
     
     
     #Exclude stopwords as per ur need
@@ -143,16 +173,14 @@ def app():
     final_stop_words = [word for word in stopwordlist if word not in not_stopwords]
     
     
-    # In[23]:
+    # In[ ]:
     
     
     
+    print(str(datetime.now())[:19]+'-> '+'Start Data Preprocessing..')
     
     
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Start Data Preprocessing..')
-    
-    
-    # In[24]:
+    # In[ ]:
     
     
     # Call preprocessing functions
@@ -164,102 +192,31 @@ def app():
     df[summary_col]=list(map(replaceEmail,df[summary_col]))
     df[summary_col]=list(map(replacePO,df[summary_col]))
     
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Data Preprocessing complete..')
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Start Prediction..')
+    print(str(datetime.now())[:19]+'-> '+'Data Preprocessing complete..')
+    print(str(datetime.now())[:19]+'-> '+'Start Prediction..')
     
     
-    # In[27]:
+    # In[ ]:
     
     
     #### Predict Target for Unseen Data
     sample_rec=df[summary_col] 
     seq = tokenizer.texts_to_sequences(sample_rec)
-    
-    sample_rec_seq=[]
-    for data in seq:
-     sample_rec_seq.append( np.pad(seq[0],(MAX_SEQUENCE_LENGTH,0),mode='constant', constant_values=0))
-    sample_rec_seq=np.array(sample_rec_seq)
-    
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Get class probabilities for each input..')
-    
-    url="http://localhost:8605/v1/models/oddlogic:predict"
-    
-    convertd_list=[]
-    for data in sample_rec_seq:
-        convertd_list.append(data.tolist())
-    if len(convertd_list)==1:
-        convertd_list=list(convertd_list)
-    payload={
-        "instances":convertd_list
-    }
-    response=requests.post(url,json=payload)
-    
-    
-    pred =response.text# loaded_model.predict(sample_rec_seq[0])
-    pred_json=json.loads(response.text)
-    
-    res_prob=list(map(max,pred_json['predictions']))
-    
-    print(str(datetime.now())[:19]+'-> '+'Get class label index for each input..')
-    res=list(map(np.argmax,pred_json['predictions']))
-    #print(res)
-    
-    
-    # In[28]:
-    
-    
-    
-    
+    sample_rec_seq = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
+  
+    pred = loaded_model.predict(sample_rec_seq)
+    res_prob=list(map(max,pred.tolist()))
+   
+    res=list(map(np.argmax,pred.tolist()))
+   
     labels_pred=list(map(get_label,res))
     
     
-    # In[29]:
+    df['Predicted_Assignment_Group'] = labels_pred
     
-    
-    df['Category_Predicted'] = labels_pred
-    #df['CatSubcat_CF'] = res_prob
-    #df['CF'] = list(map(lambda x:round(x*100,2),df['CatSubcat_CF']))
-    df['Confidence_Probability'] = list(map(lambda x:round(x*100,2),res_prob))
-    
-    df['ProcessType'] = 'ML'
-    df['keyword_used'] = ''
-    
-    #df = df.append(key_mapped,ignore_index = True, sort=True)[key_mapped.columns.tolist()]
-    
-    #print(str(datetime.now())[:19]+'-> '+'Keywords percent      ::',round((df[df['Confidence_Probability'] == 100].shape[0]/df.shape[0])*100,2))
-    print(str(datetime.now())[:19]+'-> '+'Overall >90 CL percent::',round((df[df['Confidence_Probability'] >= 90].shape[0]/df.shape[0])*100,2))
-    print(str(datetime.now())[:19]+'-> '+'Overall >80 CL percent::',round((df[df['Confidence_Probability'] >= 80].shape[0]/df.shape[0])*100,2))
-    
-    
-    # In[ ]:
-    
-    
-    print(str(datetime.now())[:19]+'-> '+'Save predictions to file.')
-    outfile = filename+'_ML_Prediction_'+ver+'.xlsx'
-    #df[column_order].to_excel('.\\..\\OutputData\\'+outfile, index=False,encoding ='utf8')
-    df.to_excel(path+'/'+outfile, index=False,encoding ='utf8')
-    
-    
-    # In[ ]:
-    
-    
-    print('\n***********************************\n')
-    print(str(datetime.now())[:19]+'-> '+'Predictions saved to the file               :',outfile)
-    endtime = datetime.now()
-    tm = str(endtime - starttime)
-    st.session_state['status_predict_placeholder'].warning(str(datetime.now())[:19]+'-> '+'Total time taken for prediction(Hr:Min:Sec) :'+tm[:7])
-    print(str(datetime.now())[:19]+'-> '+'Total number of rows processed              :',df.shape[0])
-    print('\n***********************************\n')
-    
-    
-    st.session_state['status_predict_placeholder'].warning("Prediction Finished.")
-    my_expander = st.session_state['predict_result'].expander(label='Prediction Summary')
-    with my_expander:    
-     st.write(str(datetime.now())[:19]+'-> '+'Predictions saved to the file               :\n'+outfile)
-     st.write(str(datetime.now())[:19]+'-> '+'Total number of rows processed              :',df.shape[0])
-    st.session_state['predict_header'].subheader('Prediction Result')
-    st.session_state['predict_df'].write(df)
-    st.session_state['user_data']=None
-    
+    df_op = df.filter(['Number', 'Short description','Predicted_Assignment_Group'])
+    df_op.rename(columns = {'Number':'Ticket Number'}, inplace = True)
    
-    
+    st.session_state['status_predict_placeholder'].warning("Prediction Successful.")
+    st.session_state['predict_result'].write("Summary")
+    st.session_state['predict_header'].write(df_op)
